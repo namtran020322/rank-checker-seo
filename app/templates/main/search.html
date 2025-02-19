@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
+                Kiểm Tra Thứ Hạng Từ Khóa
+            </h1>
+            <p class="text-lg text-gray-600">
+                Kiểm tra thứ hạng từ khóa của bạn trên Google một cách chính xác và hiệu quả
+            </p>
+        </div>
+
+        <!-- Search Form Container -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <form method="POST" action="{{ url_for('main.search') }}" id="searchForm" class="space-y-8">
+                {{ form.hidden_tag() }}
+
+                <!-- Keywords and URLs Container -->
+                <div id="keywordUrlPairs" class="space-y-6">
+                    <div class="keyword-url-pair">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Keyword Input -->
+                            <div class="space-y-2">
+                                {{ form.keyword.label(class="block text-sm font-medium text-gray-700") }}
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    {{ form.keyword(
+                                        class="block w-full pr-10 focus:ring-primary focus:border-primary sm:text-sm border-gray-300 rounded-md placeholder-gray-400",
+                                        placeholder="Ví dụ: máy tính xách tay"
+                                    ) }}
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {% for error in form.keyword.errors %}
+                                    <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- URL Input -->
+                            <div class="space-y-2">
+                                {{ form.target_url.label(class="block text-sm font-medium text-gray-700") }}
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    {{ form.target_url(
+                                        class="block w-full pr-10 focus:ring-primary focus:border-primary sm:text-sm border-gray-300 rounded-md placeholder-gray-400",
+                                        placeholder="Nhập URL website của bạn"
+                                    ) }}
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {% for error in form.target_url.errors %}
+                                    <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add More Button -->
+                <div class="flex justify-center">
+                    <button type="button" id="addMoreBtn" 
+                            class="inline-flex items-center px-4 py-2 border border-primary text-sm font-medium rounded-md text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200">
+                        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Thêm từ khóa + URL
+                    </button>
+                </div>
+
+                <!-- Search Options -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                    <div class="space-y-2">
+                        {{ form.country.label(class="block text-sm font-medium text-gray-700") }}
+                        <div class="mt-1 relative">
+                            {{ form.country(
+                                class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md"
+                            ) }}
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2z" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% for error in form.country.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="space-y-2">
+                        {{ form.device.label(class="block text-sm font-medium text-gray-700") }}
+                        <div class="mt-1 relative">
+                            {{ form.device(
+                                class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md"
+                            ) }}
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                        </div>
+                        {% for error in form.device.errors %}
+                            <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-center mt-8">
+                    {{ form.submit(
+                        class="px-8 py-3 text-lg font-semibold text-white gradient-bg rounded-xl shadow-lg hover:shadow-xl btn-hover transition-all duration-200 w-full md:w-auto"
+                    ) }}
+                </div>
+            </form>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-900 mb-4">Hướng dẫn sử dụng:</h4>
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                                <span class="text-primary font-semibold">1</span>
+                            </div>
+                        </div>
+                        <p class="ml-3 text-sm text-gray-600">
+                            Nhập từ khóa cần kiểm tra và URL website của bạn
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                                <span class="text-primary font-semibold">2</span>
+                            </div>
+                        </div>
+                        <p class="ml-3 text-sm text-gray-600">
+                            Có thể thêm nhiều cặp từ khóa + URL để kiểm tra cùng lúc
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                                <span class="text-primary font-semibold">3</span>
+                            </div>
+                        </div>
+                        <p class="ml-3 text-sm text-gray-600">
+                            Chọn quốc gia để kiểm tra thứ hạng tại thị trường mục tiêu
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                                <span class="text-primary font-semibold">4</span>
+                            </div>
+                        </div>
+                        <p class="ml-3 text-sm text-gray-600">
+                            Chọn thiết bị để kiểm tra thứ hạng trên mobile hoặc desktop
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('keywordUrlPairs');
+    const addButton = document.getElementById('addMoreBtn');
+    let pairCount = 1;
+
+    addButton.addEventListener('click', function() {
+        pairCount++;
+        const newPair = `
+            <div class="keyword-url-pair pt-6 border-t border-gray-200 mt-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                    <!-- Remove button -->
+                    <button type="button" class="absolute -top-3 right-0 text-gray-400 hover:text-red-500 remove-pair">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Keyword Input -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">Từ khóa ${pairCount}</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="text" name="keyword_${pairCount}" 
+                                class="block w-full pr-10 focus:ring-primary focus:border-primary sm:text-sm border-gray-300 rounded-md placeholder-gray-400"
+                                placeholder="Nhập từ khóa cần kiểm tra">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL Input -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">URL cần kiểm tra ${pairCount}</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="text" name="target_url_${pairCount}" 
+                                class="block w-full pr-10 focus:ring-primary focus:border-primary sm:text-sm border-gray-300 rounded-md placeholder-gray-400"
+                                placeholder="Nhập URL website của bạn">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add new pair before the "Add More" button
+        const template = document.createElement('template');
+        template.innerHTML = newPair.trim();
+        container.appendChild(template.content.firstChild);
+
+        // Add event listener to remove button
+        const removeButtons = document.querySelectorAll('.remove-pair');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.keyword-url-pair').remove();
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

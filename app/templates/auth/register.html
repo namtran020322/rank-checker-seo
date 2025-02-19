@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+                Đăng ký tài khoản mới
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Hoặc
+                <a href="{{ url_for('auth.login') }}" class="font-medium text-primary hover:text-primary-dark">
+                    đăng nhập nếu đã có tài khoản
+                </a>
+            </p>
+        </div>
+
+        <div class="mt-8 bg-white py-8 px-4 shadow-sm rounded-lg sm:px-10">
+            <form class="space-y-6" method="POST" action="{{ url_for('auth.register') }}">
+                {{ form.hidden_tag() }}
+
+                <div>
+                    {{ form.username.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.username(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Chọn tên đăng nhập"
+                        ) }}
+                    </div>
+                    {% for error in form.username.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ form.email.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.email(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Nhập địa chỉ email"
+                        ) }}
+                    </div>
+                    {% for error in form.email.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ form.password.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.password(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Tạo mật khẩu (ít nhất 8 ký tự)"
+                        ) }}
+                    </div>
+                    {% for error in form.password.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ form.password2.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.password2(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Nhập lại mật khẩu"
+                        ) }}
+                    </div>
+                    {% for error in form.password2.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ form.submit(
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white gradient-bg hover:shadow-lg btn-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                    ) }}
+                </div>
+            </form>
+
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">
+                            Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng của chúng tôi
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

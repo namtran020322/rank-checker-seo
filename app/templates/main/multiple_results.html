@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Results Header -->
+    <div class="bg-white rounded-xl shadow-sm px-6 py-4 mb-6">
+        <div class="md:flex md:items-center md:justify-between">
+            <div class="min-w-0 flex-1">
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl">
+                    Kết Quả Kiểm Tra Thứ Hạng
+                </h2>
+                <p class="mt-2 text-gray-600">
+                    Tổng số URL đã kiểm tra: {{ searches|length }}
+                </p>
+            </div>
+
+            <div class="mt-4 flex md:mt-0 md:ml-4">
+                <a href="{{ url_for('main.search') }}" 
+                   class="inline-flex items-center px-4 py-2 border border-primary rounded-md shadow-sm text-sm font-medium text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Kiểm tra thêm từ khóa
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="bg-white shadow-sm rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            STT
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            URL
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Từ khóa
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Khu vực
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Thiết bị
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Kết quả
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for search in searches %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ loop.index }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-sm text-gray-900 break-all">{{ search.target_url }}</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-sm font-medium text-gray-900">{{ search.keyword }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900">{{ search.country.upper() }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="text-sm text-gray-900">{{ search.device.title() }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if search.target_url_rank %}
+                                {% if search.target_url_rank <= 10 %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Top {{ search.target_url_rank }}
+                                    </span>
+                                {% elif search.target_url_rank <= 100 %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                        Top {{ search.target_url_rank }}
+                                    </span>
+                                {% endif %}
+                            {% else %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    >100
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Export Form -->
+    <div class="mt-8 flex justify-end">
+        <form action="{{ url_for('main.export_results', search_id=searches[0].id) }}" method="post" class="flex items-center space-x-2">
+            {{ export_form.hidden_tag() }}
+            {{ export_form.format(
+                class="block w-36 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg"
+            ) }}
+            {{ export_form.submit(
+                class="gradient-bg px-4 py-2 text-sm font-semibold text-white shadow-lg rounded-lg btn-hover flex items-center"
+            ) }}
+        </form>
+    </div>
+</div>
+{% endblock %}

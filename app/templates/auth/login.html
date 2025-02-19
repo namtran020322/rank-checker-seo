@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+                Đăng nhập vào tài khoản
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Hoặc
+                <a href="{{ url_for('auth.register') }}" class="font-medium text-primary hover:text-primary-dark">
+                    đăng ký tài khoản mới
+                </a>
+            </p>
+        </div>
+
+        <div class="mt-8 bg-white py-8 px-4 shadow-sm rounded-lg sm:px-10">
+            <form class="space-y-6" method="POST" action="{{ url_for('auth.login') }}">
+                {{ form.hidden_tag() }}
+                
+                <div>
+                    {{ form.username.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.username(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Nhập tên đăng nhập"
+                        ) }}
+                    </div>
+                    {% for error in form.username.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ form.password.label(class="block text-sm font-medium text-gray-700") }}
+                    <div class="mt-1">
+                        {{ form.password(
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm",
+                            placeholder="Nhập mật khẩu"
+                        ) }}
+                    </div>
+                    {% for error in form.password.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        {{ form.remember_me(
+                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                        ) }}
+                        {{ form.remember_me.label(
+                            class="ml-2 block text-sm text-gray-900"
+                        ) }}
+                    </div>
+                </div>
+
+                <div>
+                    {{ form.submit(
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white gradient-bg hover:shadow-lg btn-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                    ) }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

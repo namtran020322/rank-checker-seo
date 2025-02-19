@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="relative pb-16">
+        <!-- Background with gradient -->
+        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-blue-500 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl py-20 sm:py-32 lg:py-40 text-center">
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                    <span class="block">Kiểm Tra Thứ Hạng</span>
+                    <span class="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">Google Rankings</span>
+                </h1>
+                <p class="mt-6 text-lg leading-8 text-gray-600">
+                    Theo dõi hiệu suất từ khóa của bạn trên Google một cách chính xác và hiệu quả. 
+                    Kiểm tra thứ hạng từ khóa trên nhiều quốc gia và thiết bị khác nhau.
+                </p>
+                <div class="mt-10 flex items-center justify-center gap-x-6">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.search') }}"
+                           class="gradient-bg px-8 py-3 text-base font-semibold text-white shadow-lg rounded-xl btn-hover">
+                            Bắt đầu kiểm tra
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('auth.login') }}"
+                           class="gradient-bg px-8 py-3 text-base font-semibold text-white shadow-lg rounded-xl btn-hover">
+                            Bắt đầu ngay
+                        </a>
+                        <a href="{{ url_for('auth.register') }}"
+                           class="text-base font-semibold leading-7 text-gray-900 hover:text-primary transition-colors duration-200">
+                            Tạo tài khoản <span aria-hidden="true">→</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-24 sm:py-32 bg-white">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl lg:text-center">
+                <h2 class="text-base font-semibold leading-7 text-primary">Tính năng nổi bật</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    Mọi thứ bạn cần để theo dõi thứ hạng từ khóa
+                </p>
+            </div>
+            <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-lg font-semibold leading-7 text-gray-900">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                                <svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                </svg>
+                            </div>
+                            Kiểm tra toàn cầu
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                            <p class="flex-auto">Kiểm tra thứ hạng từ khóa trên Google tại nhiều quốc gia khác nhau. Hỗ trợ đa dạng thị trường mục tiêu của bạn.</p>
+                        </dd>
+                    </div>
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-lg font-semibold leading-7 text-gray-900">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                                <svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            Đa thiết bị
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                            <p class="flex-auto">Theo dõi thứ hạng trên cả thiết bị di động và máy tính để bàn. Đảm bảo hiệu suất tốt trên mọi nền tảng.</p>
+                        </dd>
+                    </div>
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-lg font-semibold leading-7 text-gray-900">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                                <svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                                </svg>
+                            </div>
+                            Xuất dữ liệu
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                            <p class="flex-auto">Xuất kết quả dễ dàng sang Excel hoặc CSV. Phân tích và chia sẻ dữ liệu một cách thuận tiện.</p>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
